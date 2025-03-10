@@ -39,3 +39,7 @@ body {
 .scroll-container::-webkit-scrollbar-track {
   background-color: #1e1e1e; /* Cor de fundo da trilha */
 }
+
+div {
+    user-select: none;
+}
