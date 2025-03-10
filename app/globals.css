@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Estilizando a barra de rolagem apenas dentro do componente */
+.scroll-container::-webkit-scrollbar {
+  width: 8px; /* Largura da scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #8b5cf6; /* Cor roxa (Tailwind purple-500) */
+  border-radius: 4px; /* Borda arredondada */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background-color: #1e1e1e; /* Cor de fundo da trilha */
+}
