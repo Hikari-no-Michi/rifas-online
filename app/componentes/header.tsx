@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ logo, setTheme, theme }) => {
         </button>
       </div>
       <div className="text-center text-lg text-[#98BD43]">
-        <a href="#">{logo}</a>
+        <a href="/">{logo}</a>
       </div>
       <div className="flex items-center justify-center space-x-5">
         {/* Ícone Home */}

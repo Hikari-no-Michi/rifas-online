@@ -16,16 +16,14 @@ interface Theme {
 
 interface PriceAppProps {
   price: number;
-  tituloPrimeiro: string;
-  tituloSegundo: string;
   theme: Theme;
+  description: string;
 }
 
 export default function PriceApp({
   price,
-  tituloPrimeiro,
-  tituloSegundo,
   theme,
+  description,
 }: PriceAppProps) {
   return (
     <div className="mt-4 w-[98%] md:w-[60%] lg:w-[50%]">
@@ -41,37 +39,22 @@ export default function PriceApp({
         {price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </p>
 
-      {/* Botões de escolha */}
-      <div className="mt-4 flex w-full space-x-1">
-        <button
-          className={`flex w-1/2 items-center justify-center  p-2 text-center font-semibold transition-transform duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none active:scale-95  active:shadow-inner
-          ${
-            theme.selectedTheme === 'claro'
-              ? 'bg-pink-500 text-white'
-              : 'bg-green-600 text-white'
-          }
-          `}
-        >
-          {tituloPrimeiro}
-        </button>
-        <button
-          className={`flex w-1/2 items-center justify-center  p-2 text-center font-semibold transition-transform duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none active:scale-95  active:shadow-inner
-          ${
-            theme.selectedTheme === 'claro'
-              ? 'bg-orange-400 text-white'
-              : 'bg-yellow-500'
-          }
-          `}
-        >
-          {/* Ícone de medalha */}
-
-          {tituloSegundo}
-        </button>
+      {/* Descrição do Sorteio com Label no topo e Maiúsculo */}
+      <div
+        className={`mt-4 py-3 px-4 text-center rounded-lg bg-[#364153] text-white`}
+      >
+        <label className="block text-xl font-semibold text-uppercase mb-3 text-slate-200">
+          Descrição do Sorteio
+        </label>
+        <p className="py-4 break-words text-slate-200">{description}</p>
       </div>
 
-      {/* Texto de orientação */}
-      <p className={`m-5 text-center ${theme[theme.selectedTheme].corTexto}`}>
-        Selecione a quantidade de números
+      {/* Texto de orientação com Padding */}
+      <p
+        className={`m-5 text-center ${theme[theme.selectedTheme].corTexto}`}
+      >
+        Selecione a quantidade de números, quanto mais pontos você comprar mais
+        chances de ganhar!
       </p>
     </div>
   );

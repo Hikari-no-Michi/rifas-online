@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-module.exports = nextConfig;
+const nextConfig = {
+    devIndicators: false, // Desabilita as ferramentas de desenvolvedor
+  };
+  
+  module.exports = nextConfig;
+  

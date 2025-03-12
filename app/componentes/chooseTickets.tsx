@@ -49,7 +49,7 @@ const ChooseTickets: React.FC<ChooseTicketsProps> = ({
             theme.selectedTheme === 'escuro'
               ? isSelected
                 ? 'bg-[#FFD700] text-[#212529] border border-[#DAA520]' // Amarelo vibrante com bordas douradas
-                : 'bg-[#2F4F4F] text-[#DCDCDC] border border-[#696969]' // Cinza escuro para contraste
+                : 'bg-[#024a71] text-[#DCDCDC] border border-[#696969]' // Cinza escuro para contraste
               : isSelected
               ? 'bg-[#87CEFA] text-[#FFFFFF] border border-[#4682B4]' // Azul claro com bordas azul-escuro
               : 'bg-[#F0F8FF] text-[#212529] border border-[#B0C4DE]'; // Azul bem claro com bordas suaves
