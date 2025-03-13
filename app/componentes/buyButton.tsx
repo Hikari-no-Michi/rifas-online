@@ -55,16 +55,16 @@ const BuyButton: React.FC<BuyButtonProps> = ({
   return (
     <div className="w-[98%] md:w-[60%] lg:w-[50%]">
       <button
-        onClick={handleClick} // Abre o link do WhatsApp apenas se houver números selecionados
-        disabled={isSelectedNumbersEmpty} // Desabilita o botão caso não haja números selecionados
+        onClick={handleClick} 
+        disabled={isSelectedNumbersEmpty} 
         className={`mt-4 mb-4 flex w-full items-center justify-center rounded-xl px-8 py-3 font-semibold text-white transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl hover:bg-gradient-to-r hover:from-green-600 hover:via-green-700 hover:to-green-800 focus:outline-none active:scale-95 active:shadow-none ${
           isSelectedNumbersEmpty
-            ? 'bg-red-500 cursor-not-allowed' // Cor vermelha e cursor de não permitido se a lista estiver vazia
-            : 'bg-gradient-to-r from-green-500 via-green-600 to-green-700' // Cor verde se houver números selecionados
+            ? 'bg-red-500 cursor-not-allowed' 
+            : 'bg-gradient-to-r from-green-500 via-green-600 to-green-700' 
         }`}
       >
-        <span className="text-lg">COMPRAR PONTOS POR</span>
-        <span className="ml-3 text-2xl font-bold text-yellow-300">
+        <span className="text-xl">Comprar por</span>
+        <span className="ml-3 text-xl font-bold text-yellow-300">
           R$ {formattedPrice}
         </span>
       </button>
@@ -72,8 +72,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg max-w-sm w-full">
-            <h2 className="text-xl font-semibold mb-4 text-slate-800">
+          <div className="bg-white p-3 rounded-lg max-w-sm w-[90%] md:w-[60%] lg:w-[50%] ">
+            <h2 className="text-xl font-semibold mb-4 text-slate-800 text-center">
               Ao comprar mais de 5 pontos, você recebe um desconto de 14%!
             </h2>
             <div className="flex justify-between">
