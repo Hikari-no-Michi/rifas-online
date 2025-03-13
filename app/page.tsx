@@ -10,10 +10,10 @@ interface Rifa {
 
 async function getRifas(): Promise<Rifa[]> {
   try {
-    const res = await fetch('https://rifas-online-tau.vercel.app/api/Rifas', { cache: 'no-store' }); // Use URL completa
+    const res = await fetch('https://rifas-online-tau.vercel.app/api/Rifas', { cache: 'no-store' }); 
     if (!res.ok) throw new Error(`Erro ao buscar rifas: ${res.statusText}`);
     
-    const data = await res.json(); // Aguarda a conversão da resposta
+    const data = await res.json(); 
     return data;
   } catch (error) {
     console.error('Erro ao buscar rifas:', error);
