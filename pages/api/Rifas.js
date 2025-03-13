@@ -11,43 +11,40 @@ export default async function handler(req, res) {
       valorUnitario,
       quantidadePontos,
       linkFoto,
-      //usuario,  
+      // usuario,
     } = req.body;
 
     try {
       await database.connect();
 
-      // Normaliza e formata o título para URL
       const tituloUrl = titulo
-        .normalize("NFD") // Remove acentos
-        .replace(/[\u0300-\u036f]/g, "") // Elimina diacríticos
-        .replace(/ç/g, "c") // Substitui 'ç' por 'c'
-        .replace(/[^a-zA-Z0-9\s-]/g, "") // Remove caracteres especiais
-        .replace(/\s+/g, '-') // Substitui espaços por hífens
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/ç/g, "c")
+        .replace(/[^a-zA-Z0-9\s-]/g, "")
+        .replace(/\s+/g, '-')
         .toLowerCase();
 
-      // Cria um hash MD5 baseado na data do sorteio
       const hashSorteio = crypto
         .createHash('md5')
         .update(dataSorteio.toString())
         .digest('hex')
         .substring(0, 6);
 
-      // Gera a URL personalizada
       const urlPersonalizada = `${tituloUrl}-${hashSorteio}`;
 
       const novaRifa = new Rifa({
         titulo,
         descricao,
-        dataCriacao: new Date(),  
-        dataSorteio: new Date(dataSorteio),
+        dataCriacao: new Date(),
+        dataSorteio: new Date(dataSorteio), // Garante conversão correta
         valorUnitario,
         quantidadePontos,
-        status: "Ativo",  
+        status: "Ativo",
         linkFoto,
-        //usuario,  
+        // usuario,
         numeroGanhador: null,
-        urlPersonalizada, // Adicionando a URL personalizada gerada
+        urlPersonalizada,
       });
 
       const resultado = await novaRifa.save();
@@ -56,11 +53,24 @@ export default async function handler(req, res) {
         message: 'Rifa criada com sucesso!',
         rifa: resultado,
       });
-
-      await database.disconnect();
     } catch (err) {
       console.error('Erro ao criar a rifa:', err);
       res.status(500).json({ message: 'Erro ao criar a rifa', error: err.message });
+    } finally {
+      await database.disconnect(); // Certifica que a conexão será fechada
+    }
+  } else if (req.method === 'GET') {
+    try {
+      await database.connect();
+
+      const rifas = await Rifa.find({}, 'titulo valorUnitario linkFoto urlPersonalizada').lean();
+
+      res.status(200).json(rifas); // Corrigido para `res.json()` ao invés de `NextResponse.json()`
+    } catch (error) {
+      console.error('Erro ao buscar rifas:', error);
+      res.status(500).json({ message: 'Erro ao buscar rifas', error: error.message });
+    } finally {
+      await database.disconnect(); // Fecha a conexão no `GET`
     }
   } else {
     res.status(405).json({ message: 'Método não permitido' });
