@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface BuyButtonProps {
   price: number;
@@ -11,28 +11,30 @@ const BuyButton: React.FC<BuyButtonProps> = ({
   selectedNumbers,
   produto,
 }) => {
-  // Formatação do preço para o formato brasileiro
   const formattedPrice = price.toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  // Função para gerar o link do WhatsApp
   const generateWhatsAppLink = () => {
-    const formattedNumbers = selectedNumbers.join(', '); // Formatar as dezenas como uma string
+    const formattedNumbers = selectedNumbers.join(', ');
     const message = `Estou interessado em comprar os números: [${formattedNumbers}]. Total: R$ ${formattedPrice}. Rifa: ${produto} `;
-    const encodedMessage = encodeURIComponent(message); // Codificar a mensagem para URL
+    const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/+5586994059642?text=${encodedMessage}`;
   };
 
-  // Verifica se a lista de números está vazia
   const isSelectedNumbersEmpty = selectedNumbers.length === 0;
-
-  // Estado para controlar a exibição do modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmPurchase, setIsConfirmPurchase] = useState(false);
 
-  // Função para abrir o modal caso a quantidade de números seja menor que 3
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isModalOpen]);
+
   const handleClick = () => {
     if (selectedNumbers.length < 3) {
       setIsModalOpen(true);
@@ -41,7 +43,6 @@ const BuyButton: React.FC<BuyButtonProps> = ({
     }
   };
 
-  // Função para confirmar a compra ou comprar mais números
   const handleConfirm = () => {
     setIsConfirmPurchase(true);
     setIsModalOpen(false);
@@ -57,7 +58,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({
       <button
         onClick={handleClick} 
         disabled={isSelectedNumbersEmpty} 
-        className={`mt-4 mb-4 flex w-full items-center justify-center rounded-xl px-8 py-3 font-semibold text-white transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl hover:bg-gradient-to-r hover:from-green-600 hover:via-green-700 hover:to-green-800 focus:outline-none active:scale-95 active:shadow-none ${
+        className={`mt-4 mb-4 flex w-full items-center justify-center rounded-xl px-8 py-3 font-semibold text-white hover:shadow-xl hover:bg-gradient-to-r hover:from-green-600 hover:via-green-700 hover:to-green-800 focus:outline-none ${
           isSelectedNumbersEmpty
             ? 'bg-red-500 cursor-not-allowed' 
             : 'bg-gradient-to-r from-green-500 via-green-600 to-green-700' 
@@ -69,23 +70,22 @@ const BuyButton: React.FC<BuyButtonProps> = ({
         </span>
       </button>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-3 rounded-lg max-w-sm w-[90%] md:w-[60%] lg:w-[50%] ">
+          <div className="bg-white p-3 rounded-lg max-w-sm w-[90%] md:w-[60%] lg:w-[50%]">
             <h2 className="text-xl font-semibold mb-4 text-slate-800 text-center">
               Ao comprar mais de 5 pontos, você recebe um desconto de 14%!
             </h2>
             <div className="flex justify-between">
               <button
                 onClick={handleConfirm}
-                className="bg-white py-2 px-6 text-gray-700 text-sm" // Reduzido o tamanho da fonte para text-sm
+                className="bg-white py-2 px-6 text-gray-700 text-sm"
               >
                 Quero comprar somente {selectedNumbers.length}
               </button>
               <button
                 onClick={handleBuyMore}
-                className="bg-green-500 text-white py-2 px-6 rounded-md text-sm" // Reduzido o tamanho da fonte para text-sm
+                className="bg-green-500 text-white py-2 px-6 rounded-md text-sm"
               >
                 Comprar mais!
               </button>

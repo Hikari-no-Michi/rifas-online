@@ -7,19 +7,22 @@ interface Rifa {
   linkFoto: string;
   urlPersonalizada: string;
 }
+const isDev = true;
+const baseUrl = isDev ? "http://localhost:3000" : "https://rifas-online-tau.vercel.app";
 
 async function getRifas(): Promise<Rifa[]> {
   try {
-    const res = await fetch('https://rifas-online-tau.vercel.app/api/Rifas', { cache: 'no-store' }); 
+    const res = await fetch(`${baseUrl}/api/Rifas`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Erro ao buscar rifas: ${res.statusText}`);
-    
-    const data = await res.json(); 
+
+    const data = await res.json();
     return data;
   } catch (error) {
     console.error('Erro ao buscar rifas:', error);
     return [];
   }
 }
+
 
 export default async function Home() {
   const rifas: Rifa[] = await getRifas();
